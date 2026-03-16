@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import Link from "next/link";
 import "./globals.css";
+import Link from "next/link";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "MySite",
-  description: "My REST API Site",
+  description: "My Rest API Site",
 };
 
 export default function RootLayout({
@@ -24,19 +24,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko">
+    <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} 
+        antialiased min-h-screen flex flex-col 
+        `}
       >
         <header>
           <nav className="flex gap-4">
             <Link href="/">메인</Link>
-            <Link href="/posts">글 목록</Link>
+            <Link href="/list">목록</Link>
           </nav>
         </header>
-        <main>{children}</main>
+        <main className="flex-grow flex justify-center items-center">{children}</main>
         <footer>푸터</footer>
       </body>
     </html>
   );
-} 
+}
