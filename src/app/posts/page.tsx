@@ -1,5 +1,6 @@
 "use client"
 
+import { PostDto } from "@/type/post";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -11,7 +12,7 @@ export interface Post {
 
 export default function Home() {
 
-    const [posts, setPosts] = useState<Post[]>([]);
+    const [posts, setPosts] = useState<PostDto[]>([]);
 
     useEffect(() => {
         fetch("http://localhost:8080/api/v1/posts")
