@@ -1,6 +1,10 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+
 export default function Write() {
+
+    const router = useRouter();
 
     const onSubmitHandler = (e: any) => {
         e.preventDefault();;
@@ -32,9 +36,11 @@ export default function Write() {
             })
         })
             .then(response => response.json())
-            .then(data => {
-                console.log(data);
-            })
+            .then(rs => {
+                alert(rs.msg);
+                // 글 상세 페이지로 이동
+                router.push(`/posts/${rs.data.postDto.id}`)
+            });
     }
 
     return (
