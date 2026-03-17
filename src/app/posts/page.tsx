@@ -11,7 +11,7 @@ export interface Post {
     content: string
 }
 
-export default function Home() {
+export default function List() {
 
     const [posts, setPosts] = useState<PostDto[]>([]);
 

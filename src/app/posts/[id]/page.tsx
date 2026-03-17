@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { PostDto } from "@/type/post";
 import { fetchApi } from "@/lib/client";
 
-export default function Home() {
+export default function Detail() {
 
     const [post, setPost] = useState<PostDto | null>(null);
     const { id } = useParams();
