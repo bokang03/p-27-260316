@@ -21,12 +21,14 @@ export default function Home() {
     }, []);
 
     return (
-        <ul>
-            {posts.map((post) => (
+        posts.length <= 0
+          ? <div>로딩중...</div>
+          : <ul>
+              {posts.map((post) => (
                 <li key={post.id} className="p-2">
-                    {post.id}. {post.title}
+                  {post.id}. {post.title}
                 </li>
-            ))}
-        </ul>
-    );
+              ))}
+            </ul>
+      )
 }
