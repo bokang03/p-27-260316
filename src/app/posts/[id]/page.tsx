@@ -10,8 +10,8 @@ import Link from "next/link";
 export default function Detail() {
 
     const [post, setPost] = useState<PostDto | null>(null);
-    const [postComments, setPostComments] = useState<PostCommentDto[]>
-        ([]);
+    const [postComments, setPostComments] = useState<PostCommentDto[] | null>
+        (null);
     const { id } = useParams();
     const router = useRouter();
 
@@ -60,9 +60,12 @@ export default function Detail() {
                     </div>
                     <h2 className="p-2">댓글 목록</h2>
 
-                    {postComments.length === 0 && <div>댓글이 없습니다.</div>}
+                    {postComments === null && <div>Loading...</div>}
+                    {postComments !== null && postComments.length === 0 && (
+                        <div>댓글이 없습니다.</div>
+                    )}
 
-                    {postComments.length > 0 && (
+                    {postComments !== null && postComments.length > 0 && (
                         <ul>
                             {postComments.map((postComment) => (
                                 <li key={postComment.id}>
