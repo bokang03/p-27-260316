@@ -56,6 +56,26 @@ export default function Detail() {
         });
     };
 
+    const onModifySuccess = (id: number, contentValue: string) => {
+        if (postComments === null) return;
+
+        // 1
+        // fetchApi(`/api/v1/posts/${postId}/comments`)
+        //     .then((rs) => {
+        //         console.log(rs);
+        //         setPostComments(rs);
+        //     })
+
+        // 2
+        setPostComments(
+            postComments.map((postComment) =>
+                postComment.id === id
+                    ? { ...postComment, content: contentValue }
+                    : postComment
+            )
+        );
+    };
+
     if (isError) return <div>문제 발생</div>
     return (
         <>
@@ -82,6 +102,7 @@ export default function Detail() {
                         postId={post.id}
                         postComments={postComments}
                         deletePostComment={deletePostComment}
+                        onModifySuccess={onModifySuccess}
                     />
                 </div>
             }
@@ -89,10 +110,11 @@ export default function Detail() {
     )
 }
 
-function PostCommentList({ postId, postComments, deletePostComment }: {
+function PostCommentList({ postId, postComments, deletePostComment, onModifySuccess }: {
     postId: number,
     postComments: PostCommentDto[] | null,
-    deletePostComment: (commentId: number) => void
+    deletePostComment: (commentId: number) => void,
+    onModifySuccess: (commentId: number, content: string) => void
 }) {
     return (
         <>
@@ -111,6 +133,7 @@ function PostCommentList({ postId, postComments, deletePostComment }: {
                             postId={postId}
                             postComment={postComment}
                             deletePostComment={deletePostComment}
+                            onModifySuccess={onModifySuccess}
                         />
                     ))}
                 </ul>
@@ -119,10 +142,11 @@ function PostCommentList({ postId, postComments, deletePostComment }: {
     )
 }
 
-function PostCommentListItem({ postId, postComment, deletePostComment }: {
+function PostCommentListItem({ postId, postComment, deletePostComment, onModifySuccess }: {
     postId: number,
     postComment: PostCommentDto,
-    deletePostComment: (commentId: number) => void
+    deletePostComment: (commentId: number) => void,
+    onModifySuccess: (commentId: number, content: string) => void
 }) {
 
     const [modifyMode, setModifyMode] = useState(false);
@@ -143,6 +167,14 @@ function PostCommentListItem({ postId, postComment, deletePostComment }: {
         }).then((data) => {
             alert(data.msg);
             toggleModifyMode();
+            // 1번 방식 댓글 목록을 다시 가져온다.
+            //  - 장: 데이터 정합성.
+            //  - 단: 성능
+            // 2번 방식 리액트 상태값을 변경
+            //  - 장: 빠르게 적용
+            //  - 단: db와 ui 상태가 일치 하지 않을 수 있음.
+
+            onModifySuccess(postComment.id, contentValue);
         });
     };
 
